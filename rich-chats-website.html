@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rich Chats – Business Messaging Made Simple</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#25D366;--green-dark:#1aab52;--green-light:#e8faf0;--navy:#0f172a;--body:#1e293b;--muted:#64748b;--light:#f8fafc;--border:#e2e8f0;--white:#fff;--yellow:#fbbf24}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--body);background:#fff;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+.top-bar{background:var(--navy);color:#fff;text-align:center;padding:10px 20px;font-size:13px;font-weight:500}
+.top-bar a{color:var(--green);text-decoration:none;font-weight:700;margin-left:6px}
+.top-bar a:hover{text-decoration:underline}
+
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:68px;position:sticky;top:0;z-index:999;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:38px;height:38px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.nav-logo-text{font-size:21px;font-weight:900;color:var(--navy);letter-spacing:-0.5px}
+.nav-logo-text span{color:var(--green)}
+.nav-center{display:flex;gap:4px;align-items:center}
+.nav-link{padding:8px 14px;border-radius:8px;font-size:14px;font-weight:500;color:var(--body);cursor:pointer;background:none;border:none;display:flex;align-items:center;gap:4px;font-family:'Inter',sans-serif;transition:background 0.15s}
+.nav-link:hover{background:var(--light);color:var(--navy)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.btn-call{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:600;color:var(--navy);background:var(--light);border:1.5px solid var(--border);cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;text-decoration:none;transition:all 0.15s}
+.btn-call:hover{border-color:var(--green);color:var(--green-dark)}
+.btn-demo{padding:9px 20px;border-radius:8px;font-size:14px;font-weight:700;color:#fff;background:var(--green);border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s}
+.btn-demo:hover{background:var(--green-dark)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,0.72);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:500px;box-shadow:0 24px 80px rgba(0,0,0,0.25);overflow:hidden;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{background:var(--navy);padding:28px 32px 22px;position:relative}
+.modal-head h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:5px;letter-spacing:-0.5px}
+.modal-head p{font-size:14px;color:rgba(255,255,255,0.5)}
+.modal-close{position:absolute;top:18px;right:20px;background:rgba(255,255,255,0.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+.modal-close:hover{background:rgba(255,255,255,0.2)}
+.modal-body{padding:26px 32px 30px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
+.f-g{margin-bottom:13px}
+.f-g label{display:block;font-size:13px;font-weight:600;color:var(--body);margin-bottom:5px}
+.f-g input,.f-g select,.f-g textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:var(--body);outline:none;transition:border-color 0.15s}
+.f-g input:focus,.f-g select:focus,.f-g textarea:focus{border-color:var(--green)}
+.f-g textarea{resize:none;height:75px}
+.f-submit{width:100%;padding:13px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;margin-top:2px}
+.f-submit:hover{background:var(--green-dark)}
+.f-note{text-align:center;font-size:12px;color:var(--muted);margin-top:12px}
+.f-note a{color:var(--green-dark);font-weight:700;text-decoration:none}
+.form-success{display:none;text-align:center;padding:40px 24px}
+.form-success .tick{font-size:52px;margin-bottom:14px}
+.form-success h3{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.form-success p{font-size:15px;color:var(--muted);line-height:1.6}
+.form-success .cback{margin-top:18px;font-size:14px;font-weight:600;color:var(--body)}
+.form-success .cback a{color:var(--green-dark);text-decoration:none}
+
+/* HERO */
+.hero{padding:80px 40px 56px;text-align:center;background:#fff;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(37,211,102,0.07) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);border:1px solid rgba(37,211,102,0.3);padding:5px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--green-dark);margin-bottom:22px}
+.stars{color:var(--yellow);font-size:12px}
+.hero h1{font-size:clamp(36px,5.5vw,66px);font-weight:900;line-height:1.08;letter-spacing:-2px;color:var(--navy);margin-bottom:20px;max-width:860px;margin-left:auto;margin-right:auto}
+.hero h1 .hl{color:var(--green)}
+.hero p{font-size:18px;color:var(--muted);max-width:540px;margin:0 auto 34px;line-height:1.65}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.hbp{padding:14px 32px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.hbp:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,211,102,0.3)}
+.hbs{padding:14px 32px;background:#fff;color:var(--navy);border:1.5px solid var(--border);border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+.hbs:hover{border-color:var(--green);color:var(--green-dark);transform:translateY(-1px)}
+.hero-sub{font-size:13px;color:var(--muted)}
+
+/* LOGO CLOUD */
+.logo-cloud{padding:26px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.logo-cloud p{text-align:center;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:16px;letter-spacing:1px;text-transform:uppercase}
+.logo-row{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.logo-item{font-size:15px;font-weight:700;color:#cbd5e1}
+
+/* ==========================================
+   PRICING HIGHLIGHT BANNER (Main Feature)
+========================================== */
+.ph-wrap{margin:0 40px 60px}
+.ph-box{
+  background:linear-gradient(135deg,#080f1e 0%,#0c2015 45%,#080f1e 100%);
+  border-radius:24px;overflow:hidden;position:relative;
+  border:2px solid rgba(37,211,102,0.4);
+  box-shadow:0 0 80px rgba(37,211,102,0.14),0 28px 70px rgba(0,0,0,0.22);
+}
+.ph-box::before{content:'';position:absolute;top:-100px;right:-100px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(37,211,102,0.18) 0%,transparent 65%);pointer-events:none}
+.ph-box::after{content:'';position:absolute;bottom:-80px;left:40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(37,211,102,0.1) 0%,transparent 65%);pointer-events:none}
+.ph-inner{display:flex;align-items:center;justify-content:space-between;gap:36px;padding:56px 60px;flex-wrap:wrap;position:relative;z-index:1}
+.ph-left{flex:1;min-width:280px}
+.ph-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.35);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;color:#4ade80;letter-spacing:1px;text-transform:uppercase;margin-bottom:22px}
+.ph-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+.ph-title{font-size:clamp(26px,3.8vw,44px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-1.5px;margin-bottom:10px}
+.ph-qt{color:#4ade80;background:rgba(37,211,102,0.1);border-radius:8px;padding:2px 8px;border:1px solid rgba(37,211,102,0.25)}
+.ph-sub{font-size:17px;color:rgba(255,255,255,0.6);margin-bottom:26px;line-height:1.55}
+.ph-sub strong{color:#fff}
+.ph-proof{display:flex;flex-direction:column;gap:9px;margin-bottom:30px}
+.ph-proof-item{display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,0.65)}
+.ph-proof-item::before{content:'✓';color:#4ade80;font-weight:700;font-size:15px;flex-shrink:0}
+.ph-cta{display:flex;gap:12px;flex-wrap:wrap}
+.ph-btn{padding:13px 28px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.ph-btn:hover{background:var(--green-dark);transform:translateY(-1px)}
+.ph-ghost{padding:13px 28px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.ph-ghost:hover{border-color:rgba(255,255,255,0.55)}
+.ph-right{flex-shrink:0}
+.ph-card{background:rgba(255,255,255,0.04);border:1px solid rgba(37,211,102,0.3);border-radius:22px;padding:38px 46px;text-align:center;min-width:250px;position:relative}
+.ph-card::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:55%;height:1px;background:linear-gradient(90deg,transparent,rgba(37,211,102,0.9),transparent)}
+.ph-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px}
+.ph-amt{font-size:78px;font-weight:900;color:#4ade80;line-height:1;letter-spacing:-4px;display:flex;align-items:flex-start;justify-content:center}
+.ph-sym{font-size:28px;font-weight:700;margin-top:10px;letter-spacing:0}
+.ph-unit{font-size:14px;color:rgba(255,255,255,0.4);margin-top:10px;font-weight:500}
+.ph-sep{width:78%;height:1px;background:rgba(255,255,255,0.08);margin:18px auto}
+.ph-vs{font-size:13px;color:rgba(255,255,255,0.35);line-height:1.7}
+.ph-vs s{color:rgba(255,255,255,0.2)}
+.ph-save{display:inline-block;margin-top:10px;background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#fca5a5;font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px}
+.ph-types{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.ph-type{font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;background:rgba(37,211,102,0.12);color:#4ade80;border:1px solid rgba(37,211,102,0.25)}
+
+/* TRUST */
+.trust-section{padding:52px 40px;background:var(--light);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px;max-width:900px;margin:0 auto;text-align:center}
+.trust-num{font-size:36px;font-weight:900;color:var(--navy);letter-spacing:-1.5px;line-height:1}
+.trust-lbl{font-size:14px;color:var(--muted);margin-top:6px;font-weight:500}
+
+/* SECTION */
+.section{padding:80px 40px}
+.sec-tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-dark);background:var(--green-light);border:1px solid rgba(37,211,102,0.25);padding:4px 14px;border-radius:100px;margin-bottom:14px}
+.sec-title{font-size:clamp(28px,4vw,46px);font-weight:900;color:var(--navy);letter-spacing:-1.5px;line-height:1.1;margin-bottom:14px}
+.sec-sub{font-size:17px;color:var(--muted);max-width:540px;margin:0 auto 46px;line-height:1.65}
+
+.channel-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:700px;margin:0 auto}
+.ch-pill{display:flex;align-items:center;gap:8px;padding:11px 20px;border-radius:100px;background:#fff;border:1.5px solid var(--border);font-size:15px;font-weight:600;color:var(--body);box-shadow:0 1px 4px rgba(0,0,0,0.06);transition:all 0.2s;cursor:default}
+.ch-pill:hover{border-color:var(--green);box-shadow:0 4px 12px rgba(37,211,102,0.15);transform:translateY(-2px)}
+
+/* AI SECTION */
+.ai-sec{background:var(--navy);padding:80px 40px;text-align:center}
+.ai-sec .sec-tag{background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.3);color:#4ade80}
+.ai-sec .sec-title{color:#fff}
+.ai-sec .sec-sub{color:rgba(255,255,255,0.4)}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:980px;margin:0 auto}
+.ai-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:18px;padding:30px;transition:all 0.2s;text-align:left}
+.ai-card:hover{border-color:rgba(37,211,102,0.4);transform:translateY(-3px)}
+.ai-icon{width:46px;height:46px;border-radius:13px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.2);display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:16px}
+.ai-card h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px}
+.ai-card p{font-size:14px;color:rgba(255,255,255,0.48);line-height:1.6}
+.ai-num{font-size:30px;font-weight:900;color:#4ade80;margin-top:14px;letter-spacing:-1px}
+.ai-num-l{font-size:13px;color:rgba(255,255,255,0.3);margin-top:2px}
+
+/* PILLARS */
+.pillars{padding:80px 40px;background:#fff}
+.ptabs{display:flex;gap:4px;background:var(--light);border-radius:14px;padding:5px;max-width:360px;margin:0 auto 44px;border:1px solid var(--border)}
+.ptab{flex:1;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;color:var(--muted);transition:all 0.2s;border:none;background:none;font-family:'Inter',sans-serif}
+.ptab.active{background:#fff;color:var(--navy);box-shadow:0 1px 6px rgba(0,0,0,0.1)}
+.pcontent{display:none;max-width:980px;margin:0 auto}
+.pcontent.active{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.pt-text h2{font-size:clamp(22px,3vw,32px);font-weight:900;color:var(--navy);letter-spacing:-0.8px;margin-bottom:14px;line-height:1.2}
+.pt-bullets{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:22px}
+.pt-bullets li{font-size:15px;color:var(--muted);display:flex;align-items:flex-start;gap:9px;line-height:1.55}
+.pt-bullets li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+.pt-stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px}
+.pstat-n{font-size:26px;font-weight:900;color:var(--navy);letter-spacing:-1px}
+.pstat-l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+.pt-visual{background:var(--light);border:1px solid var(--border);border-radius:20px;padding:26px;min-height:240px;display:flex;flex-direction:column;gap:10px}
+.mock{background:#fff;border-radius:12px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.mock-h{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.mock-av{width:30px;height:30px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.mock-nm{font-size:13px;font-weight:600;color:var(--navy)}
+.mock-st{font-size:11px;color:var(--green);font-weight:500}
+.bin{background:var(--green-light);border-radius:4px 12px 12px 12px;padding:9px 13px;font-size:13px;color:var(--body);max-width:82%;margin-bottom:5px;line-height:1.45}
+.bout{background:var(--navy);border-radius:12px 4px 12px 12px;padding:9px 13px;font-size:13px;color:#fff;max-width:82%;margin-left:auto;margin-bottom:5px;line-height:1.45}
+.mtag{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;background:rgba(37,211,102,0.12);color:var(--green-dark);margin:2px}
+
+/* INTEGRATIONS */
+.int-sec{padding:80px 40px;background:#fff;text-align:center}
+.int-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:13px;max-width:780px;margin:0 auto}
+.int-card{background:var(--light);border:1px solid var(--border);border-radius:14px;padding:18px 10px;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--body);transition:all 0.2s;cursor:default}
+.int-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.int-icon{font-size:26px}
+
+/* PRICING */
+.pricing-sec{padding:80px 40px;background:var(--light)}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:960px;margin:0 auto}
+.pc{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:30px;transition:all 0.2s;position:relative}
+.pc:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
+.pc.feat{border-color:var(--green);box-shadow:0 0 0 4px rgba(37,211,102,0.08)}
+.pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:12px;font-weight:700;padding:4px 16px;border-radius:100px;white-space:nowrap}
+.pc-plan{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.pc-price{font-size:44px;font-weight:900;color:var(--navy);letter-spacing:-2px;line-height:1}
+.pc-price sup{font-size:20px;vertical-align:super}
+.pc-price span{font-size:14px;font-weight:400;color:var(--muted);letter-spacing:0}
+.pc-desc{font-size:14px;color:var(--muted);margin:9px 0 20px;line-height:1.5}
+.pc-div{height:1px;background:var(--border);margin-bottom:18px}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:9px}
+.pc-feats li{font-size:14px;color:var(--body);display:flex;align-items:center;gap:8px}
+.ck{color:var(--green);font-weight:700}
+.xx{color:#cbd5e1}
+.pc-btn{width:100%;margin-top:20px;padding:12px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;border:none}
+.pc-o{background:#fff;color:var(--navy);border:1.5px solid var(--border)!important}
+.pc-o:hover{border-color:var(--navy)!important}
+.pc-g{background:var(--green);color:#fff}
+.pc-g:hover{background:var(--green-dark)}
+
+/* CONTACT */
+.contact-sec{padding:80px 40px;background:#fff}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;max-width:980px;margin:0 auto}
+.ci-info h2{font-size:clamp(22px,3vw,34px);font-weight:900;color:var(--navy);letter-spacing:-0.8px;margin-bottom:14px;line-height:1.2}
+.ci-info p{font-size:15px;color:var(--muted);line-height:1.65;margin-bottom:26px}
+.contact-items{display:flex;flex-direction:column;gap:14px}
+.ci{display:flex;align-items:center;gap:14px}
+.ci-icon{width:44px;height:44px;border-radius:12px;background:var(--green-light);border:1px solid rgba(37,211,102,0.25);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ci-det{font-size:15px;font-weight:600;color:var(--navy)}
+.ci-det a{color:var(--navy);text-decoration:none}
+.ci-det a:hover{color:var(--green-dark)}
+.ci-lbl{font-size:12px;color:var(--muted)}
+.cf-box{background:var(--light);border:1px solid var(--border);border-radius:20px;padding:30px}
+.cf-box h3{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:5px}
+.cf-box .sub{font-size:14px;color:var(--muted);margin-bottom:20px}
+.cf-r{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px}
+.cff{margin-bottom:11px}
+.cff label{display:block;font-size:13px;font-weight:600;color:var(--body);margin-bottom:5px}
+.cff input,.cff select,.cff textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;color:var(--body);outline:none;transition:border-color 0.15s;background:#fff}
+.cff input:focus,.cff select:focus,.cff textarea:focus{border-color:var(--green)}
+.cff textarea{resize:none;height:72px}
+.cf-sub{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.cf-sub:hover{background:var(--green-dark)}
+
+/* REVIEWS */
+.reviews{padding:80px 40px;background:var(--light);border-top:1px solid var(--border)}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:980px;margin:0 auto}
+.rev-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px}
+.rev-stars{color:var(--yellow);font-size:14px;letter-spacing:2px;margin-bottom:10px}
+.rev-text{font-size:14px;color:var(--body);line-height:1.65;margin-bottom:14px;font-style:italic}
+.rev-auth{display:flex;align-items:center;gap:10px}
+.rev-av{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.rev-nm{font-size:13px;font-weight:700;color:var(--navy)}
+.rev-rl{font-size:12px;color:var(--muted)}
+
+/* CTA */
+.cta-sec{padding:80px 40px;background:var(--navy);text-align:center}
+.cta-sec h2{font-size:clamp(28px,4.5vw,52px);font-weight:900;color:#fff;letter-spacing:-2px;line-height:1.1;max-width:680px;margin:0 auto 14px}
+.cta-sec h2 span{color:#4ade80}
+.cta-sec p{font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:32px}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-g{padding:14px 36px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.cta-g:hover{background:var(--green-dark);transform:translateY(-1px)}
+.cta-o{padding:14px 36px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.cta-o:hover{border-color:rgba(255,255,255,0.55)}
+
+/* FOOTER */
+footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;margin-bottom:36px}
+.fl{display:flex;align-items:center;gap:9px;margin-bottom:12px;text-decoration:none}
+.fl-icon{width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.fl-text{font-size:20px;font-weight:900;color:var(--navy);letter-spacing:-0.5px}
+.fl-text span{color:var(--green)}
+.fd{font-size:14px;color:var(--muted);line-height:1.65;max-width:220px;margin-bottom:12px}
+.fci{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);margin-bottom:7px}
+.fci a{color:var(--muted);text-decoration:none;transition:color 0.15s}
+.fci a:hover{color:var(--green-dark)}
+.fc h4{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
+.fc a{display:block;font-size:14px;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:color 0.15s}
+.fc a:hover{color:var(--green-dark)}
+.fb{display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px}
+.fb p{font-size:13px;color:var(--muted)}
+.fb-links{display:flex;gap:16px}
+.fb-links a{font-size:13px;color:var(--muted);text-decoration:none}
+.fb-links a:hover{color:var(--green-dark)}
+.bdg{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.bdg span{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;border:1px solid var(--border);color:var(--muted)}
+
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:998;width:56px;height:56px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 20px rgba(37,211,102,0.5);cursor:pointer;text-decoration:none;transition:transform 0.2s}
+.wa-float:hover{transform:scale(1.1)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.5s ease,transform 0.5s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  nav{padding:0 14px}
+  .nav-center{display:none}
+  .hero{padding:46px 16px 38px}
+  .ph-wrap{margin:0 12px 40px}
+  .ph-inner{padding:34px 22px}
+  section,.section,.pillars,.pricing-sec,.contact-sec,.int-sec,.reviews,.cta-sec{padding:50px 16px}
+  .logo-cloud,.trust-section{padding:26px 16px}
+  .pcontent.active{grid-template-columns:1fr}
+  .contact-inner{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr 1fr}
+  footer{padding:36px 16px 20px}
+  .f-row,.cf-r{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  🚀 AI-powered WhatsApp Business messaging — clone your voice, deploy in minutes.
+  <a href="#" onclick="openModal()">Book a Free Demo →</a>
+</div>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">💬</div>
+    <div class="nav-logo-text">Rich<span>Chats</span></div>
+  </a>
+  <div class="nav-center">
+    <button class="nav-link">Solutions ▾</button>
+    <button class="nav-link">Product ▾</button>
+    <button class="nav-link" onclick="document.querySelector('.pricing-sec').scrollIntoView({behavior:'smooth'})">Pricing</button>
+    <button class="nav-link" onclick="document.querySelector('.contact-sec').scrollIntoView({behavior:'smooth'})">Contact</button>
+  </div>
+  <div class="nav-right">
+    <a class="btn-call" href="tel:7972438499">📞 79724 38499</a>
+    <button class="btn-demo" onclick="openModal()">Book a Demo</button>
+    <button class="btn-demo" onclick="openModal()">Try for Free</button>
+  </div>
+</nav>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="demoModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Book a Free Demo</h2>
+      <p>Our team at Rich Chats will call you within 24 hours</p>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="f-row">
+        <div class="f-g"><label>First Name *</label><input type="text" id="fName" placeholder="Rahul"/></div>
+        <div class="f-g"><label>Last Name *</label><input type="text" id="lName" placeholder="Sharma"/></div>
+      </div>
+      <div class="f-g"><label>Phone Number *</label><input type="tel" id="fPhone" placeholder="+91 79724 38499"/></div>
+      <div class="f-g"><label>Business Name *</label><input type="text" id="fBiz" placeholder="Your company name"/></div>
+      <div class="f-row">
+        <div class="f-g"><label>City</label><input type="text" id="fCity" placeholder="Ahilyanagar"/></div>
+        <div class="f-g"><label>Industry</label>
+          <select id="fType">
+            <option value="">Select industry</option>
+            <option>E-Commerce</option><option>Healthcare</option>
+            <option>Education</option><option>Real Estate</option>
+            <option>Retail</option><option>Agency</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="f-g"><label>What are you looking for?</label><textarea id="fMsg" placeholder="E.g. I want to set up WhatsApp marketing for my business..."></textarea></div>
+      <button class="f-submit" onclick="submitForm()">Submit Enquiry →</button>
+      <p class="f-note">Or call us: <a href="tel:7972438499">📞 79724 38499</a></p>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <div class="tick">✅</div>
+      <h3>Enquiry Received!</h3>
+      <p>Thank you! Our Rich Chats team will reach out to schedule your free demo.</p>
+      <p class="cback">Need immediate help? <a href="tel:7972438499">Call: 79724 38499</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero reveal">
+  <div class="hero-badge"><span class="stars">★★★★★</span> Trusted by businesses across India</div>
+  <h1>The <span class="hl">#1 WhatsApp</span><br>Business Platform</h1>
+  <p>From the first marketing touchpoint through the sales cycle to ongoing customer success — drive faster ROI with AI-native WhatsApp messaging.</p>
+  <div class="hero-btns">
+    <button class="hbp" onclick="openModal()">Book a Free Demo</button>
+    <button class="hbs" onclick="document.querySelector('.contact-sec').scrollIntoView({behavior:'smooth'})">📞 Call Us Now</button>
+  </div>
+  <p class="hero-sub">Rich Chats · Savedi, Ahilyanagar · 79724 38499</p>
+</section>
+
+<div class="logo-cloud reveal">
+  <p>Serving businesses across</p>
+  <div class="logo-row">
+    <div class="logo-item">E-COMMERCE</div>
+    <div class="logo-item">HEALTHCARE</div>
+    <div class="logo-item">EDUCATION</div>
+    <div class="logo-item">REAL ESTATE</div>
+    <div class="logo-item">RETAIL</div>
+    <div class="logo-item">AGENCIES</div>
+  </div>
+</div>
+
+<!-- PRICING HIGHLIGHT BANNER -->
+<div class="ph-wrap reveal">
+  <div class="ph-box">
+    <div class="ph-inner">
+      <div class="ph-left">
+        <div class="ph-eyebrow"><span class="ph-dot"></span> Special Offer · Flat Rate Pricing</div>
+        <div class="ph-title">
+          <span class="ph-qt">"Utility or Marketing"</span> —<br>
+          One Price. Zero Confusion.
+        </div>
+        <div class="ph-sub">
+          <strong>Just ₹0.14 paisa per message.</strong><br>
+          Others charge more. We won't.
+        </div>
+        <div class="ph-proof">
+          <div class="ph-proof-item">No separate tiers for utility vs marketing messages</div>
+          <div class="ph-proof-item">Same flat rate for every message type — always</div>
+          <div class="ph-proof-item">Simple billing, zero surprises, maximum ROI</div>
+          <div class="ph-proof-item">Save up to 85% compared to competitors</div>
+        </div>
+        <div class="ph-cta">
+          <button class="ph-btn" onclick="openModal()">Get Started Free</button>
+          <button class="ph-ghost" onclick="document.querySelector('.pricing-sec').scrollIntoView({behavior:'smooth'})">See All Plans →</button>
+        </div>
+      </div>
+      <div class="ph-right">
+        <div class="ph-card">
+          <div class="ph-label">Just pay</div>
+          <div class="ph-amt"><span class="ph-sym">₹</span>0.14</div>
+          <div class="ph-unit">per message · any type · always</div>
+          <div class="ph-sep"></div>
+          <div class="ph-vs">
+            Others charge <s>₹0.40–₹0.90</s><br>
+            for marketing messages<br>
+            <span class="ph-save">You save up to 85%</span>
+          </div>
+          <div class="ph-types">
+            <span class="ph-type">Utility</span>
+            <span class="ph-type">Marketing</span>
+            <span class="ph-type">Auth</span>
+            <span class="ph-type">Service</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trust-section reveal">
+  <div class="trust-grid">
+    <div><div class="trust-num">10B+</div><div class="trust-lbl">Messages processed</div></div>
+    <div><div class="trust-num">99.9%</div><div class="trust-lbl">Uptime guaranteed</div></div>
+    <div><div class="trust-num">100+</div><div class="trust-lbl">Countries served</div></div>
+    <div><div class="trust-num">₹0.14</div><div class="trust-lbl">Flat per message</div></div>
+    <div><div class="trust-num">24/7</div><div class="trust-lbl">AI support</div></div>
+  </div>
+</div>
+
+<section class="section reveal" style="text-align:center">
+  <div class="sec-tag">Multi-channel</div>
+  <h2 class="sec-title">WhatsApp at the core.<br>Conversations everywhere.</h2>
+  <p class="sec-sub">Start with WhatsApp and naturally extend to every channel your customers love — all from one unified inbox.</p>
+  <div class="channel-grid">
+    <div class="ch-pill">💬 WhatsApp</div>
+    <div class="ch-pill">📷 Instagram</div>
+    <div class="ch-pill">👤 Facebook Messenger</div>
+    <div class="ch-pill">📱 SMS</div>
+    <div class="ch-pill">💻 Website Chat</div>
+    <div class="ch-pill">📞 Voice Calls</div>
+  </div>
+</section>
+
+<section class="ai-sec reveal">
+  <div class="sec-tag">AI @ Rich Chats</div>
+  <h2 class="sec-title">10× your performance with AI</h2>
+  <p class="sec-sub" style="color:rgba(255,255,255,0.4);margin-bottom:44px">Let AI handle the routine so your team focuses on conversations that build revenue.</p>
+  <div class="ai-grid">
+    <div class="ai-card">
+      <div class="ai-icon">🎯</div>
+      <h3>Inbound Intelligence Agent</h3>
+      <p>Qualify leads, uncover intent, and close sales on chat automatically 24/7.</p>
+      <div class="ai-num">60%</div><div class="ai-num-l">queries answered instantly</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-icon">🤖</div>
+      <h3>AI Support Agent</h3>
+      <p>Train your AI support agent in minutes and deflect repetitive queries automatically.</p>
+      <div class="ai-num">24/7</div><div class="ai-num-l">always-on support</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-icon">🎙️</div>
+      <h3>Voice AI Agent</h3>
+      <p>Clone your voice, deploy in minutes. Your AI agent now sounds exactly like you.</p>
+      <div class="ai-num">New</div><div class="ai-num-l">latest feature</div>
+    </div>
+  </div>
+</section>
+
+<section class="pillars reveal">
+  <div style="text-align:center">
+    <div class="sec-tag">Solutions</div>
+    <h2 class="sec-title">Built for every team</h2>
+    <p class="sec-sub">Use conversations to fuel every point in the buyer journey.</p>
+  </div>
+  <div class="ptabs">
+    <button class="ptab active" onclick="switchTab('m')">Marketing</button>
+    <button class="ptab" onclick="switchTab('s')">Sales</button>
+    <button class="ptab" onclick="switchTab('sp')">Support</button>
+  </div>
+  <div class="pcontent active" id="t-m">
+    <div class="pt-text">
+      <h2>Acquire, engage, and qualify leads at scale</h2>
+      <ul class="pt-bullets">
+        <li>Convert every touchpoint — ads, links, offline — into instant conversations</li>
+        <li>Better ROI with Meta &amp; Google ads that click to WhatsApp</li>
+        <li>Engage users with AI-fueled, human-like conversations automatically</li>
+        <li>Powerful campaign analytics to improve every message</li>
+      </ul>
+      <div class="pt-stats">
+        <div><div class="pstat-n">4×</div><div class="pstat-l">Less CACs</div></div>
+        <div><div class="pstat-n">3×</div><div class="pstat-l">More ROI</div></div>
+        <div><div class="pstat-n">85%</div><div class="pstat-l">Response rate</div></div>
+      </div>
+    </div>
+    <div class="pt-visual">
+      <div class="mock">
+        <div class="mock-h"><div class="mock-av">AI</div><div><div class="mock-nm">Rich Chats AI</div><div class="mock-st">● Online</div></div></div>
+        <div class="bin">Hi! 👋 Interested in our offer? Get 30% off today only.</div>
+        <div class="bout">Yes, I want the discount!</div>
+        <div class="bin">Great! Your code: <b>SAVE30</b> 🎉 Shop now ↗</div>
+        <div style="margin-top:8px"><span class="mtag">Lead Qualified</span><span class="mtag">Flash Sale</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="pcontent" id="t-s">
+    <div class="pt-text">
+      <h2>Accelerate pipeline and shorten sales cycles</h2>
+      <ul class="pt-bullets">
+        <li>One workspace for all reps to collaborate and convert leads</li>
+        <li>Real-time lead qualification — no lead slips through</li>
+        <li>AI qualifies and routes best-fit leads to reps automatically</li>
+        <li>Monitor quality and ensure great customer experience</li>
+      </ul>
+      <div class="pt-stats">
+        <div><div class="pstat-n">30%</div><div class="pstat-l">Shorter cycle</div></div>
+        <div><div class="pstat-n">3×</div><div class="pstat-l">Faster responses</div></div>
+        <div><div class="pstat-n">20%</div><div class="pstat-l">Revenue growth</div></div>
+      </div>
+    </div>
+    <div class="pt-visual">
+      <div class="mock">
+        <div class="mock-h"><div class="mock-av">S</div><div><div class="mock-nm">Sales Agent</div><div class="mock-st">● Qualifying</div></div></div>
+        <div class="bin">Hi! Interested in the Growth plan. What's your team size?</div>
+        <div class="bout">Around 25 people in sales.</div>
+        <div class="bin">Connecting you with our specialist now 👇</div>
+        <div style="margin-top:8px"><span class="mtag">Demo Scheduled</span><span class="mtag">Routed</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="pcontent" id="t-sp">
+    <div class="pt-text">
+      <h2>Delight customers and handle questions at scale</h2>
+      <ul class="pt-bullets">
+        <li>Instant, accurate answers from your knowledge base 24/7</li>
+        <li>Smart routing to the right human agent when needed</li>
+        <li>Unified Team Inbox across all messaging platforms</li>
+        <li>Data-driven insights on response time and resolutions</li>
+      </ul>
+      <div class="pt-stats">
+        <div><div class="pstat-n">40%</div><div class="pstat-l">Less workload</div></div>
+        <div><div class="pstat-n">80%</div><div class="pstat-l">AI-resolved FAQs</div></div>
+        <div><div class="pstat-n">40%</div><div class="pstat-l">Faster resolutions</div></div>
+      </div>
+    </div>
+    <div class="pt-visual">
+      <div class="mock">
+        <div class="mock-h"><div class="mock-av">C</div><div><div class="mock-nm">Support AI</div><div class="mock-st">● Resolving</div></div></div>
+        <div class="bin">Hello! How can I help you today?</div>
+        <div class="bout">My order #4821 hasn't arrived.</div>
+        <div class="bin">Out for delivery — arrives by 6 PM today ✅</div>
+        <div style="margin-top:8px"><span class="mtag">Resolved</span><span class="mtag">No human needed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="int-sec reveal">
+  <div class="sec-tag">Integrations</div>
+  <h2 class="sec-title">Connect your existing stack</h2>
+  <p class="sec-sub">100+ integrations. Your favourite tools, just a click away.</p>
+  <div class="int-grid">
+    <div class="int-card"><div class="int-icon">🟠</div>HubSpot</div>
+    <div class="int-card"><div class="int-icon">☁️</div>Salesforce</div>
+    <div class="int-card"><div class="int-icon">⚡</div>Zapier</div>
+    <div class="int-card"><div class="int-icon">🛒</div>Shopify</div>
+    <div class="int-card"><div class="int-icon">🟣</div>Zoho CRM</div>
+    <div class="int-card"><div class="int-icon">🔧</div>WooCommerce</div>
+    <div class="int-card"><div class="int-icon">🤖</div>Make</div>
+    <div class="int-card"><div class="int-icon">📊</div>Google Sheets</div>
+  </div>
+</section>
+
+<section class="pricing-sec reveal">
+  <div style="text-align:center">
+    <div class="sec-tag">Pricing</div>
+    <h2 class="sec-title">Simple, honest pricing</h2>
+    <p class="sec-sub"><b style="color:var(--green-dark)">₹0.14 per message — any type, always.</b><br>No confusion between utility and marketing.</p>
+  </div>
+  <div class="price-grid">
+    <div class="pc">
+      <div class="pc-plan">Starter</div>
+      <div class="pc-price"><sup>₹</sup>2,499<span>/mo</span></div>
+      <div class="pc-desc">Perfect for small businesses getting started with WhatsApp marketing.</div>
+      <div class="pc-div"></div>
+      <ul class="pc-feats">
+        <li><span class="ck">✓</span>1 WhatsApp number</li>
+        <li><span class="ck">✓</span>5 team members</li>
+        <li><span class="ck">✓</span>Basic AI chatbot</li>
+        <li><span class="ck">✓</span>₹0.14/message (any type)</li>
+        <li><span class="ck">✓</span>Broadcast campaigns</li>
+        <li><span class="xx">✕</span>Advanced analytics</li>
+        <li><span class="xx">✕</span>AI support agent</li>
+      </ul>
+      <button class="pc-btn pc-o" onclick="openModal()">Get Started Free</button>
+    </div>
+    <div class="pc feat">
+      <div class="pop">Most Popular</div>
+      <div class="pc-plan">Growth</div>
+      <div class="pc-price"><sup>₹</sup>5,999<span>/mo</span></div>
+      <div class="pc-desc">For scaling teams that need advanced automation and AI capabilities.</div>
+      <div class="pc-div"></div>
+      <ul class="pc-feats">
+        <li><span class="ck">✓</span>3 WhatsApp numbers</li>
+        <li><span class="ck">✓</span>15 team members</li>
+        <li><span class="ck">✓</span>Advanced AI agents</li>
+        <li><span class="ck">✓</span>₹0.14/message (any type)</li>
+        <li><span class="ck">✓</span>Full analytics dashboard</li>
+        <li><span class="ck">✓</span>CRM integrations</li>
+        <li><span class="ck">✓</span>AI support agent</li>
+      </ul>
+      <button class="pc-btn pc-g" onclick="openModal()">Start Free Trial</button>
+    </div>
+    <div class="pc">
+      <div class="pc-plan">Enterprise</div>
+      <div class="pc-price" style="font-size:34px;letter-spacing:-1px">Custom</div>
+      <div class="pc-desc">For large organisations needing custom training, dedicated support and SLAs.</div>
+      <div class="pc-div"></div>
+      <ul class="pc-feats">
+        <li><span class="ck">✓</span>Unlimited numbers</li>
+        <li><span class="ck">✓</span>Unlimited members</li>
+        <li><span class="ck">✓</span>Custom AI training</li>
+        <li><span class="ck">✓</span>₹0.14/message (any type)</li>
+        <li><span class="ck">✓</span>Dedicated support team</li>
+        <li><span class="ck">✓</span>Custom SLA</li>
+        <li><span class="ck">✓</span>On-boarding specialist</li>
+      </ul>
+      <button class="pc-btn pc-o" onclick="openModal()">Contact Sales</button>
+    </div>
+  </div>
+</section>
+
+<section class="contact-sec reveal">
+  <div style="text-align:center;margin-bottom:52px">
+    <div class="sec-tag">Contact</div>
+    <h2 class="sec-title">Get in Touch</h2>
+    <p class="sec-sub">Fill in the form below or call us directly. Our team will get back to you within 24 hours.</p>
+  </div>
+  <div class="contact-inner">
+    <div class="ci-info">
+      <h2>Talk to the<br>Rich Chats team</h2>
+      <p>We're based in Savedi, Ahilyanagar. Call us or fill the enquiry form and we'll schedule your free demo at your convenience.</p>
+      <div class="contact-items">
+        <div class="ci">
+          <div class="ci-icon">📞</div>
+          <div><div class="ci-lbl">Call / WhatsApp</div><div class="ci-det"><a href="tel:7972438499">79724 38499</a></div></div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon">📍</div>
+          <div><div class="ci-lbl">Address</div><div class="ci-det">Savedi, Ahilyanagar, Maharashtra</div></div>
+        </div>
+        <div class="ci">
+          <div class="ci-icon">💬</div>
+          <div><div class="ci-lbl">WhatsApp Us</div><div class="ci-det"><a href="https://wa.me/917972438499" target="_blank">Chat on WhatsApp →</a></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cf-box">
+      <h3>Enquiry &amp; Demo Request</h3>
+      <p class="sub">Fill in your details and we'll call you back.</p>
+      <div class="cf-r">
+        <div class="cff"><label>Full Name *</label><input type="text" id="cf-name" placeholder="Your name"/></div>
+        <div class="cff"><label>Phone Number *</label><input type="tel" id="cf-phone" placeholder="79724 38499"/></div>
+      </div>
+      <div class="cff"><label>Business Name</label><input type="text" id="cf-biz" placeholder="Your company"/></div>
+      <div class="cff"><label>Message</label><textarea id="cf-msg" placeholder="Tell us what you need..."></textarea></div>
+      <button class="cf-sub" onclick="submitContactForm()">Send Enquiry →</button>
+      <div id="cfOk" style="display:none;margin-top:14px;padding:13px;background:var(--green-light);border-radius:10px;text-align:center;font-size:14px;font-weight:600;color:var(--green-dark)">✅ Thank you! We'll call you back shortly.</div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews reveal">
+  <div style="text-align:center;margin-bottom:44px">
+    <div class="sec-tag">Reviews</div>
+    <h2 class="sec-title">What our clients say</h2>
+  </div>
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"Rich Chats transformed how we connect with customers. Our response rate jumped from 30% to 85%. The flat ₹0.14 pricing is a huge bonus — no surprises ever."</p>
+      <div class="rev-auth"><div class="rev-av">RK</div><div><div class="rev-nm">Rajesh Kumar</div><div class="rev-rl">Marketing Head, EduTech Co.</div></div></div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"One price for all messages — no confusion between utility and marketing. Exactly what businesses need. Simple, transparent, and saves us a lot of money."</p>
+      <div class="rev-auth"><div class="rev-av">PS</div><div><div class="rev-nm">Priya Sharma</div><div class="rev-rl">Operations Lead, D2C Brand</div></div></div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"The AI support agent handles 70% of queries automatically. Our team now only handles complex issues. Absolutely game-changing for our operations."</p>
+      <div class="rev-auth"><div class="rev-av">AM</div><div><div class="rev-nm">Amit Mehta</div><div class="rev-rl">CTO, HealthTech Startup</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec reveal">
+  <h2>Grow better with<br><span>Rich Chats</span> today</h2>
+  <p>Join businesses winning on WhatsApp. ₹0.14/message, always.</p>
+  <div class="cta-btns">
+    <button class="cta-g" onclick="openModal()">Book a Free Demo</button>
+    <a class="cta-o" href="tel:7972438499">📞 79724 38499</a>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div>
+      <a class="fl" href="#">
+        <div class="fl-icon">💬</div>
+        <div class="fl-text">Rich<span>Chats</span></div>
+      </a>
+      <p class="fd">Business conversations made simple. WhatsApp API platform for growing businesses across India.</p>
+      <div class="fci">📞 <a href="tel:7972438499">79724 38499</a></div>
+      <div class="fci">📍 Savedi, Ahilyanagar, Maharashtra</div>
+      <div class="bdg"><span>GDPR</span><span>Meta Partner</span><span>WhatsApp API</span></div>
+    </div>
+    <div class="fc">
+      <h4>Solutions</h4>
+      <a href="#">For Marketing</a>
+      <a href="#">For Support</a>
+      <a href="#">For Sales</a>
+      <a href="#">E-Commerce</a>
+      <a href="#">Healthcare</a>
+    </div>
+    <div class="fc">
+      <h4>Product</h4>
+      <a href="#">AI Agents</a>
+      <a href="#">No-Code Chatbots</a>
+      <a href="#">Campaigns</a>
+      <a href="#">Team Inbox</a>
+      <a href="#">Analytics</a>
+    </div>
+    <div class="fc">
+      <h4>Company</h4>
+      <a href="#" onclick="openModal()">Book a Demo</a>
+      <a href="#" onclick="document.querySelector('.contact-sec').scrollIntoView({behavior:'smooth'})">Contact Us</a>
+      <a href="#">About Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+  </div>
+  <div class="fb">
+    <p>© Rich Chats 2026. All Rights Reserved. Savedi, Ahilyanagar.</p>
+    <div class="fb-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Trust</a></div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/917972438499" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script>
+function openModal(){document.getElementById('demoModal').classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('demoModal').classList.remove('open');document.body.style.overflow=''}
+function submitForm(){
+  if(!document.getElementById('fName').value.trim()||!document.getElementById('fPhone').value.trim()||!document.getElementById('fBiz').value.trim()){alert('Please fill Name, Phone, and Business Name.');return}
+  document.getElementById('modalBody').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+}
+function submitContactForm(){
+  if(!document.getElementById('cf-name').value.trim()||!document.getElementById('cf-phone').value.trim()){alert('Please fill your name and phone number.');return}
+  document.getElementById('cfOk').style.display='block';
+  ['cf-name','cf-phone','cf-biz','cf-msg'].forEach(function(id){document.getElementById(id).value=''});
+}
+function switchTab(t){
+  document.querySelectorAll('.ptab').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.pcontent').forEach(function(c){c.classList.remove('active')});
+  document.getElementById('t-'+t).classList.add('active');
+  var m={m:0,s:1,sp:2};document.querySelectorAll('.ptab')[m[t]].classList.add('active');
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.08}).observe&&
+document.querySelectorAll('.reveal').forEach(function(el){new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.08}).observe(el)});
+</script>
+</body>
+</html>
