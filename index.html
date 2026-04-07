@@ -78,6 +78,41 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 40px;display
 .logo-row{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
 .logo-item{font-size:15px;font-weight:700;color:#cbd5e1}
 
+/* HERO PRICING BANNER */
+.hero-pricing{background:linear-gradient(135deg,#060d1a 0%,#0a1f10 50%,#060d1a 100%);padding:72px 40px;position:relative;overflow:hidden;border-bottom:1px solid rgba(37,211,102,0.2)}
+.hero-pricing::before{content:'';position:absolute;top:-120px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(37,211,102,0.15) 0%,transparent 65%);pointer-events:none}
+.hero-pricing::after{content:'';position:absolute;bottom:-100px;left:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(0,129,251,0.1) 0%,transparent 65%);pointer-events:none}
+.hp-inner{display:flex;align-items:center;justify-content:space-between;gap:48px;max-width:1100px;margin:0 auto;position:relative;z-index:1;flex-wrap:wrap}
+.hp-left{flex:1;min-width:300px}
+.hp-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.35);padding:7px 18px;border-radius:100px;font-size:12px;font-weight:700;color:#4ade80;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
+.hp-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 1.5s infinite;flex-shrink:0}
+.hp-title{font-size:clamp(30px,4.5vw,54px);font-weight:900;color:#fff;line-height:1.08;letter-spacing:-2px;margin-bottom:16px}
+.hp-qt{color:#4ade80;background:rgba(37,211,102,0.1);border-radius:10px;padding:2px 10px;border:1px solid rgba(37,211,102,0.25)}
+.hp-sub{font-size:18px;color:rgba(255,255,255,0.65);margin-bottom:28px;line-height:1.6}
+.hp-sub strong{color:#fff;font-weight:800}
+.hp-proof{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:32px}
+.hp-proof li{font-size:15px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:10px}
+.hp-proof li::before{content:'✓';color:#4ade80;font-weight:800;font-size:16px;flex-shrink:0}
+.hp-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hp-btn{padding:14px 32px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;box-shadow:0 8px 28px rgba(37,211,102,0.35)}
+.hp-btn:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 12px 36px rgba(37,211,102,0.45)}
+.hp-ghost{padding:14px 32px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.25);border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.hp-ghost:hover{border-color:rgba(255,255,255,0.6)}
+.hp-right{flex-shrink:0}
+.hp-card{background:rgba(255,255,255,0.04);border:1.5px solid rgba(37,211,102,0.35);border-radius:24px;padding:44px 52px;text-align:center;min-width:260px;position:relative;box-shadow:0 0 60px rgba(37,211,102,0.12)}
+.hp-card::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:60%;height:2px;background:linear-gradient(90deg,transparent,#4ade80,transparent);border-radius:2px}
+.hp-card-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px}
+.hp-amt{font-size:82px;font-weight:900;color:#4ade80;line-height:1;letter-spacing:-4px;display:flex;align-items:flex-start;justify-content:center}
+.hp-sym{font-size:30px;font-weight:700;margin-top:12px;letter-spacing:0}
+.hp-unit{font-size:13px;color:rgba(255,255,255,0.4);margin-top:10px;font-weight:500}
+.hp-sep{width:80%;height:1px;background:rgba(255,255,255,0.08);margin:20px auto}
+.hp-vs{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.8}
+.hp-vs s{color:rgba(255,255,255,0.2)}
+.hp-save{display:inline-block;margin-top:8px;background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#fca5a5;font-size:12px;font-weight:700;padding:4px 14px;border-radius:100px}
+.hp-types{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.hp-type{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;background:rgba(37,211,102,0.12);color:#4ade80;border:1px solid rgba(37,211,102,0.25)}
+@media(max-width:768px){.hero-pricing{padding:44px 16px}.hp-inner{gap:32px}.hp-card{padding:30px 28px;min-width:unset;width:100%}.hp-amt{font-size:64px}}
+
 /* ==========================================
    PRICING HIGHLIGHT BANNER (Main Feature)
 ========================================== */
@@ -270,6 +305,15 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
 .fb-links{display:flex;gap:16px}
 .fb-links a{font-size:13px;color:var(--muted);text-decoration:none}
 .fb-links a:hover{color:var(--green-dark)}
+.footer-trust{background:var(--navy);margin:0 -40px -26px;padding:22px 40px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.ft-pill{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:10px 20px;transition:all 0.2s}
+.ft-pill:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)}
+.ft-pill-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;flex-shrink:0}
+.ft-pill-text{display:flex;flex-direction:column}
+.ft-pill-label{font-size:11px;font-weight:700;color:#fff;letter-spacing:0.3px;line-height:1.2}
+.ft-pill-sub{font-size:10px;color:rgba(255,255,255,0.4);font-weight:500;line-height:1.2}
+.ft-sep{width:1px;height:32px;background:rgba(255,255,255,0.1)}
+@media(max-width:768px){.footer-trust{margin:0 -16px -20px;padding:18px 16px}.ft-sep{display:none}}
 .bdg{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .bdg span{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;border:1px solid var(--border);color:var(--muted)}
 
@@ -359,6 +403,42 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
   </div>
 </div>
 
+<!-- HERO PRICING BANNER -->
+<section class="hero-pricing">
+  <div class="hp-inner">
+    <div class="hp-left">
+      <div class="hp-eyebrow"><span class="hp-dot"></span> Special Offer · Flat Rate Pricing</div>
+      <h1 class="hp-title"><span class="hp-qt">"Utility or Marketing"</span> —<br>One Price. Zero Confusion.</h1>
+      <p class="hp-sub"><strong>Just ₹0.115 paisa per message.</strong><br>Others charge more. We won't.</p>
+      <ul class="hp-proof">
+        <li>No separate tiers for utility vs marketing messages</li>
+        <li>Same flat rate for every message type — always</li>
+        <li>Simple billing, zero surprises, maximum ROI</li>
+        <li>Save up to 85% compared to competitors</li>
+      </ul>
+      <div class="hp-cta">
+        <button class="hp-btn" onclick="openModal()">Get Started Free</button>
+        <button class="hp-ghost" onclick="document.querySelector('.pricing-sec').scrollIntoView({behavior:'smooth'})">See All Plans →</button>
+      </div>
+    </div>
+    <div class="hp-right">
+      <div class="hp-card">
+        <div class="hp-card-label">Just pay</div>
+        <div class="hp-amt"><span class="hp-sym">₹</span>0.115</div>
+        <div class="hp-unit">per message · any type · always</div>
+        <div class="hp-sep"></div>
+        <div class="hp-vs">Others charge <s>₹0.79–₹1.10</s><br>for marketing messages<br><span class="hp-save">You save up to 85%</span></div>
+        <div class="hp-types">
+          <span class="hp-type">Utility</span>
+          <span class="hp-type">Marketing</span>
+          <span class="hp-type">Auth</span>
+          <span class="hp-type">Service</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- HERO -->
 <section class="hero reveal">
   <div class="hero-badge"><span class="stars">★★★★★</span> Trusted by businesses across India</div>
@@ -384,7 +464,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
 </div>
 
 <!-- PRICING HIGHLIGHT BANNER -->
-<div class="ph-wrap reveal">
+<!-- <div class="ph-wrap reveal">
   <div class="ph-box">
     <div class="ph-inner">
       <div class="ph-left">
@@ -394,7 +474,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
           One Price. Zero Confusion.
         </div>
         <div class="ph-sub">
-          <strong>Just ₹0.14 paisa per message.</strong><br>
+          <strong>Just ₹0.115 paisa per message.</strong><br>
           Others charge more. We won't.
         </div>
         <div class="ph-proof">
@@ -411,7 +491,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
       <div class="ph-right">
         <div class="ph-card">
           <div class="ph-label">Just pay</div>
-          <div class="ph-amt"><span class="ph-sym">₹</span>0.14</div>
+          <div class="ph-amt"><span class="ph-sym">₹</span>0.115</div>
           <div class="ph-unit">per message · any type · always</div>
           <div class="ph-sep"></div>
           <div class="ph-vs">
@@ -429,14 +509,14 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="trust-section reveal">
   <div class="trust-grid">
     <div><div class="trust-num">10B+</div><div class="trust-lbl">Messages processed</div></div>
     <div><div class="trust-num">99.9%</div><div class="trust-lbl">Uptime guaranteed</div></div>
     <div><div class="trust-num">100+</div><div class="trust-lbl">Countries served</div></div>
-    <div><div class="trust-num">₹0.14</div><div class="trust-lbl">Flat per message</div></div>
+    <div><div class="trust-num">₹0.115</div><div class="trust-lbl">Flat per message</div></div>
     <div><div class="trust-num">24/7</div><div class="trust-lbl">AI support</div></div>
   </div>
 </div>
@@ -589,7 +669,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
   <div style="text-align:center">
     <div class="sec-tag">Pricing</div>
     <h2 class="sec-title">Simple, honest pricing</h2>
-    <p class="sec-sub"><b style="color:var(--green-dark)">₹0.14 per message — any type, always.</b><br>No confusion between utility and marketing.</p>
+    <p class="sec-sub"><b style="color:var(--green-dark)">₹0.115 per message — any type, always.</b><br>No confusion between utility and marketing.</p>
   </div>
   <div class="price-grid">
     <div class="pc">
@@ -601,7 +681,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
         <li><span class="ck">✓</span>1 WhatsApp number</li>
         <li><span class="ck">✓</span>5 team members</li>
         <li><span class="ck">✓</span>Basic AI chatbot</li>
-        <li><span class="ck">✓</span>₹0.14/message (any type)</li>
+        <li><span class="ck">✓</span>₹0.115/message (any type)</li>
         <li><span class="ck">✓</span>Broadcast campaigns</li>
         <li><span class="xx">✕</span>Advanced analytics</li>
         <li><span class="xx">✕</span>AI support agent</li>
@@ -618,7 +698,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
         <li><span class="ck">✓</span>3 WhatsApp numbers</li>
         <li><span class="ck">✓</span>15 team members</li>
         <li><span class="ck">✓</span>Advanced AI agents</li>
-        <li><span class="ck">✓</span>₹0.14/message (any type)</li>
+        <li><span class="ck">✓</span>₹0.115/message (any type)</li>
         <li><span class="ck">✓</span>Full analytics dashboard</li>
         <li><span class="ck">✓</span>CRM integrations</li>
         <li><span class="ck">✓</span>AI support agent</li>
@@ -634,7 +714,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
         <li><span class="ck">✓</span>Unlimited numbers</li>
         <li><span class="ck">✓</span>Unlimited members</li>
         <li><span class="ck">✓</span>Custom AI training</li>
-        <li><span class="ck">✓</span>₹0.14/message (any type)</li>
+        <li><span class="ck">✓</span>₹0.115/message (any type)</li>
         <li><span class="ck">✓</span>Dedicated support team</li>
         <li><span class="ck">✓</span>Custom SLA</li>
         <li><span class="ck">✓</span>On-boarding specialist</li>
@@ -710,7 +790,7 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
 
 <section class="cta-sec reveal">
   <h2>Grow better with<br><span>Rich Chats</span> today</h2>
-  <p>Join businesses winning on WhatsApp. ₹0.14/message, always.</p>
+  <p>Join businesses winning on WhatsApp. ₹0.115/message, always.</p>
   <div class="cta-btns">
     <button class="cta-g" onclick="openModal()">Book a Free Demo</button>
     <a class="cta-o" href="tel:7972438499">📞 79724 38499</a>
@@ -757,6 +837,47 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
   <div class="fb">
     <p>© Rich Chats 2026. All Rights Reserved. Savedi, Ahilyanagar.</p>
     <div class="fb-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Trust</a></div>
+  </div>
+  <!-- TRUST BAR -->
+  <div class="footer-trust">
+    <!-- Made with Love in India -->
+    <div class="ft-pill">
+      <div class="ft-pill-icon" style="background:linear-gradient(135deg,#ff9933,#fff,#138808);font-size:14px">🇮🇳</div>
+      <div class="ft-pill-text">
+        <span class="ft-pill-label">Made with ❤️ in India</span>
+        <span class="ft-pill-sub">Proudly Indian</span>
+      </div>
+    </div>
+    <div class="ft-sep"></div>
+    <!-- Meta Tech Partner -->
+    <div class="ft-pill">
+      <div class="ft-pill-icon" style="background:#fff">
+        <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 2C10.059 2 2 10.059 2 20s8.059 18 18 18 18-8.059 18-18S29.941 2 20 2z" fill="#0081FB"/>
+          <path d="M9 20c0-4.418 2.91-8 6.5-8 1.8 0 3.41.85 4.55 2.22C21.19 12.85 22.8 12 24.6 12c3.59 0 6.4 3.582 6.4 8s-2.81 8-6.4 8c-1.8 0-3.41-.85-4.55-2.22C18.91 27.15 17.3 28 15.5 28 11.91 28 9 24.418 9 20z" fill="white"/>
+          <ellipse cx="15.5" cy="20" rx="3.5" ry="5.5" fill="#0081FB"/>
+          <ellipse cx="24.5" cy="20" rx="3.5" ry="5.5" fill="#0081FB"/>
+        </svg>
+      </div>
+      <div class="ft-pill-text">
+        <span class="ft-pill-label">Meta Tech Partner</span>
+        <span class="ft-pill-sub">Official Partner</span>
+      </div>
+    </div>
+    <div class="ft-sep"></div>
+    <!-- WhatsApp Business API -->
+    <div class="ft-pill">
+      <div class="ft-pill-icon" style="background:#25D366">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.413A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" fill="#25D366"/>
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="white"/>
+        </svg>
+      </div>
+      <div class="ft-pill-text">
+        <span class="ft-pill-label">Official WhatsApp Business API</span>
+        <span class="ft-pill-sub">Powered by Meta</span>
+      </div>
+    </div>
   </div>
 </footer>
 
