@@ -113,6 +113,15 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 40px;display
 .hp-type{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;background:rgba(37,211,102,0.12);color:#4ade80;border:1px solid rgba(37,211,102,0.25)}
 .hp-meta-wrap{margin-top:24px;text-align:center}
 .hp-meta-img{max-width:380px;width:100%;border-radius:16px;opacity:0.95;filter:drop-shadow(0 6px 24px rgba(0,129,251,0.35))}
+.hp-meta-badge{display:inline-flex;align-items:center;gap:12px;background:rgba(0,129,251,0.1);border:1px solid rgba(0,129,251,0.35);border-radius:14px;padding:14px 20px;margin-top:18px;text-align:left;position:relative;overflow:hidden}
+.hp-meta-badge::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,129,251,0.8),transparent)}
+.hp-meta-badge-logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#0081FB,#0064c8);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(0,129,251,0.4)}
+.hp-meta-badge-text{display:flex;flex-direction:column;gap:2px}
+.hp-meta-badge-title{font-size:14px;font-weight:800;color:#fff;letter-spacing:-0.2px}
+.hp-meta-badge-sub{font-size:12px;color:rgba(255,255,255,0.5);font-weight:500}
+.hp-meta-badge-tick{width:26px;height:26px;border-radius:50%;background:rgba(37,211,102,0.15);border:1.5px solid rgba(37,211,102,0.5);display:flex;align-items:center;justify-content:center;color:#4ade80;font-size:13px;font-weight:800;flex-shrink:0;margin-left:4px}
+.hp-meta-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.hp-meta-pill{font-size:11px;font-weight:600;padding:5px 13px;border-radius:100px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6)}
 
 /* ==========================================
    PRICING HIGHLIGHT BANNER (Main Feature)
@@ -266,15 +275,29 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 40px;display
 .cf-sub:hover{background:var(--green-dark)}
 
 /* REVIEWS */
-.reviews{padding:80px 40px;background:var(--light);border-top:1px solid var(--border)}
-.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:980px;margin:0 auto}
-.rev-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px}
-.rev-stars{color:var(--yellow);font-size:14px;letter-spacing:2px;margin-bottom:10px}
-.rev-text{font-size:14px;color:var(--body);line-height:1.65;margin-bottom:14px;font-style:italic}
-.rev-auth{display:flex;align-items:center;gap:10px}
-.rev-av{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.rev-nm{font-size:13px;font-weight:700;color:var(--navy)}
+.reviews{padding:80px 40px;background:var(--light);border-top:1px solid var(--border);overflow:hidden}
+.reviews .sec-tag{background:var(--green-light);border-color:rgba(37,211,102,0.3);color:var(--green-dark)}
+.reviews .sec-title{color:var(--navy)}
+.reviews .rev-sub{font-size:15px;color:var(--muted);margin-top:8px}
+.rev-slider-wrap{position:relative;max-width:980px;margin:0 auto}
+.rev-track-outer{overflow:hidden}
+.rev-track{display:flex;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);will-change:transform}
+.rev-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:28px;flex-shrink:0;position:relative;transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;box-shadow:0 2px 12px rgba(0,0,0,0.06);box-sizing:border-box}
+.rev-card:hover{border-color:var(--green);box-shadow:0 8px 28px rgba(37,211,102,0.15);transform:translateY(-4px)}
+.rev-card::before{content:'\201C';position:absolute;top:14px;right:20px;font-size:64px;color:rgba(37,211,102,0.15);font-family:Georgia,serif;line-height:1}
+.rev-stars{color:var(--yellow);font-size:15px;letter-spacing:2px;margin-bottom:12px}
+.rev-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;font-style:italic}
+.rev-auth{display:flex;align-items:center;gap:12px}
+.rev-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;box-shadow:0 4px 12px rgba(37,211,102,0.25)}
+.rev-nm{font-size:14px;font-weight:700;color:var(--navy)}
 .rev-rl{font-size:12px;color:var(--muted)}
+.rev-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:32px}
+.rev-btn{width:44px;height:44px;border-radius:50%;background:#fff;border:1.5px solid var(--border);color:var(--navy);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.rev-btn:hover{background:var(--green);border-color:var(--green);color:#fff}
+.rev-dots{display:flex;gap:8px;align-items:center}
+.rev-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all 0.2s;border:none}
+.rev-dot.active{background:var(--green);width:24px;border-radius:4px}
+@media(max-width:768px){.reviews{padding:44px 16px}}
 
 /* CTA */
 .cta-sec{padding:80px 40px;background:var(--navy);text-align:center}
@@ -533,6 +556,25 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
       </div>
       <div class="hp-meta-wrap">
         <img src="images/meta.png" alt="Meta Tech Partner" class="hp-meta-img"/>
+        <div class="hp-meta-badge">
+          <div class="hp-meta-badge-logo">
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 20c0-4.418 2.91-8 6.5-8 1.8 0 3.41.85 4.55 2.22C21.19 12.85 22.8 12 24.6 12c3.59 0 6.4 3.582 6.4 8s-2.81 8-6.4 8c-1.8 0-3.41-.85-4.55-2.22C18.91 27.15 17.3 28 15.5 28 11.91 28 9 24.418 9 20z" fill="white"/>
+              <ellipse cx="15.5" cy="20" rx="3.5" ry="5.5" fill="#0081FB"/>
+              <ellipse cx="24.5" cy="20" rx="3.5" ry="5.5" fill="#0081FB"/>
+            </svg>
+          </div>
+          <div class="hp-meta-badge-text">
+            <span class="hp-meta-badge-title">Official Meta Tech Partner</span>
+            <span class="hp-meta-badge-sub">Certified provider for WhatsApp Business API</span>
+          </div>
+          <div class="hp-meta-badge-tick">✓</div>
+        </div>
+        <div class="hp-meta-pills">
+          <span class="hp-meta-pill">🔒 End-to-End Encrypted</span>
+          <span class="hp-meta-pill">⚡ 99.9% Uptime SLA</span>
+          <span class="hp-meta-pill">🌍 Global Reach</span>
+        </div>
       </div>
     </div>
   </div>
@@ -867,22 +909,57 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
   <div style="text-align:center;margin-bottom:44px">
     <div class="sec-tag">Reviews</div>
     <h2 class="sec-title">What our clients say</h2>
+    <p class="rev-sub">Trusted by 500+ businesses across India</p>
   </div>
-  <div class="rev-grid">
-    <div class="rev-card">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">"Rich Chats transformed how we connect with customers. Our response rate jumped from 30% to 85%. The flat ₹0.14 pricing is a huge bonus — no surprises ever."</p>
-      <div class="rev-auth"><div class="rev-av">RK</div><div><div class="rev-nm">Rajesh Kumar</div><div class="rev-rl">Marketing Head, EduTech Co.</div></div></div>
+  <div class="rev-slider-wrap">
+    <div class="rev-track-outer">
+      <div class="rev-track" id="revTrack">
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"Rich Chats transformed how we connect with customers. Our response rate jumped from 30% to 85%. The flat ₹0.115 pricing is a huge bonus — no surprises ever."</p>
+          <div class="rev-auth"><div class="rev-av">RK</div><div><div class="rev-nm">Rajesh Kumar</div><div class="rev-rl">Marketing Head, EduTech Co.</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"One price for all messages — no confusion between utility and marketing. Exactly what businesses need. Simple, transparent, and saves us a lot of money."</p>
+          <div class="rev-auth"><div class="rev-av">PS</div><div><div class="rev-nm">Priya Sharma</div><div class="rev-rl">Operations Lead, D2C Brand</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"The AI support agent handles 70% of queries automatically. Our team now only handles complex issues. Absolutely game-changing for our operations."</p>
+          <div class="rev-auth"><div class="rev-av">AM</div><div><div class="rev-nm">Amit Mehta</div><div class="rev-rl">CTO, HealthTech Startup</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"We switched from another platform and the difference is night and day. Setup took less than an hour and our sales team closed 3 deals on WhatsApp the same day!"</p>
+          <div class="rev-auth"><div class="rev-av">SN</div><div><div class="rev-nm">Sneha Nair</div><div class="rev-rl">Founder, Fashion Boutique</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"Broadcast campaigns on WhatsApp with Rich Chats gave us 6× better open rates than email. Our Diwali campaign reached 12,000 customers in under 10 minutes."</p>
+          <div class="rev-auth"><div class="rev-av">VD</div><div><div class="rev-nm">Vikram Desai</div><div class="rev-rl">Growth Manager, Retail Chain</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"Customer support tickets dropped by 40% in the first month. The chatbot handles FAQs perfectly and escalates only when needed. Our team loves it."</p>
+          <div class="rev-auth"><div class="rev-av">KP</div><div><div class="rev-nm">Kavita Patil</div><div class="rev-rl">Support Head, SaaS Company</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"As a real estate agency, follow-ups are everything. Rich Chats automated our entire follow-up sequence and our lead-to-site-visit conversion doubled in 6 weeks."</p>
+          <div class="rev-auth"><div class="rev-av">AR</div><div><div class="rev-nm">Arjun Rao</div><div class="rev-rl">Director, PropTech Agency</div></div></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"The team at Rich Chats is incredibly responsive. They helped us set up our entire WhatsApp funnel in 2 days. Best investment we made this year for our clinic."</p>
+          <div class="rev-auth"><div class="rev-av">DM</div><div><div class="rev-nm">Dr. Deepa More</div><div class="rev-rl">Owner, Healthcare Clinic</div></div></div>
+        </div>
+      </div>
     </div>
-    <div class="rev-card">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">"One price for all messages — no confusion between utility and marketing. Exactly what businesses need. Simple, transparent, and saves us a lot of money."</p>
-      <div class="rev-auth"><div class="rev-av">PS</div><div><div class="rev-nm">Priya Sharma</div><div class="rev-rl">Operations Lead, D2C Brand</div></div></div>
-    </div>
-    <div class="rev-card">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">"The AI support agent handles 70% of queries automatically. Our team now only handles complex issues. Absolutely game-changing for our operations."</p>
-      <div class="rev-auth"><div class="rev-av">AM</div><div><div class="rev-nm">Amit Mehta</div><div class="rev-rl">CTO, HealthTech Startup</div></div></div>
+    <div class="rev-controls">
+      <button class="rev-btn" id="revPrev">&#8592;</button>
+      <div class="rev-dots" id="revDots"></div>
+      <button class="rev-btn" id="revNext">&#8594;</button>
     </div>
   </div>
 </section>
@@ -1001,6 +1078,44 @@ function switchTab(t){
   document.getElementById('t-'+t).classList.add('active');
   var m={m:0,s:1,sp:2};document.querySelectorAll('.ptab')[m[t]].classList.add('active');
 }
+// REVIEW SLIDER
+(function(){
+  var outer=document.getElementById('revTrack').parentElement;
+  var track=document.getElementById('revTrack');
+  var cards=Array.prototype.slice.call(track.querySelectorAll('.rev-card'));
+  var dotsWrap=document.getElementById('revDots');
+  var cur=0;var gap=20;
+  function pv(){return window.innerWidth<=768?1:3;}
+  function init(){
+    var p=pv();
+    var w=Math.floor((outer.offsetWidth-(p-1)*gap)/p);
+    cards.forEach(function(c){c.style.width=w+'px';c.style.minWidth=w+'px';c.style.marginRight=gap+'px';});
+    buildDots();goTo(0);
+  }
+  function pages(){return Math.ceil(cards.length/pv());}
+  function buildDots(){
+    dotsWrap.innerHTML='';
+    for(var i=0;i<pages();i++){
+      var d=document.createElement('button');
+      d.className='rev-dot'+(i===0?' active':'');
+      d.setAttribute('data-i',i);
+      d.onclick=function(){goTo(+this.getAttribute('data-i'));};
+      dotsWrap.appendChild(d);
+    }
+  }
+  function goTo(n){
+    cur=(n+pages())%pages();
+    var step=(cards[0].offsetWidth+gap)*pv();
+    track.style.transform='translateX(-'+(cur*step)+'px)';
+    dotsWrap.querySelectorAll('.rev-dot').forEach(function(d,i){d.classList.toggle('active',i===cur);});
+  }
+  init();
+  document.getElementById('revPrev').onclick=function(){goTo(cur-1);};
+  document.getElementById('revNext').onclick=function(){goTo(cur+1);};
+  var resizeTimer;
+  window.addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(init,100);});
+  setInterval(function(){goTo(cur+1);},4500);
+})();
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.08}).observe&&
 document.querySelectorAll('.reveal').forEach(function(el){new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.08}).observe(el)});
