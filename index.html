@@ -111,7 +111,8 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 40px;display
 .hp-save{display:inline-block;margin-top:8px;background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#fca5a5;font-size:12px;font-weight:700;padding:4px 14px;border-radius:100px}
 .hp-types{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:16px}
 .hp-type{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;background:rgba(37,211,102,0.12);color:#4ade80;border:1px solid rgba(37,211,102,0.25)}
-@media(max-width:768px){.hero-pricing{padding:44px 16px}.hp-inner{gap:32px}.hp-card{padding:30px 28px;min-width:unset;width:100%}.hp-amt{font-size:64px}}
+.hp-meta-wrap{margin-top:24px;text-align:center}
+.hp-meta-img{max-width:380px;width:100%;border-radius:16px;opacity:0.95;filter:drop-shadow(0 6px 24px rgba(0,129,251,0.35))}
 
 /* ==========================================
    PRICING HIGHLIGHT BANNER (Main Feature)
@@ -324,18 +325,113 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
 .reveal.visible{opacity:1;transform:none}
 
 @media(max-width:768px){
-  nav{padding:0 14px}
+  /* NAV */
+  nav{padding:0 14px;height:58px}
   .nav-center{display:none}
-  .hero{padding:46px 16px 38px}
-  .ph-wrap{margin:0 12px 40px}
-  .ph-inner{padding:34px 22px}
-  section,.section,.pillars,.pricing-sec,.contact-sec,.int-sec,.reviews,.cta-sec{padding:50px 16px}
-  .logo-cloud,.trust-section{padding:26px 16px}
-  .pcontent.active{grid-template-columns:1fr}
-  .contact-inner{grid-template-columns:1fr}
-  .ft{grid-template-columns:1fr 1fr}
-  footer{padding:36px 16px 20px}
-  .f-row,.cf-r{grid-template-columns:1fr}
+  .nav-right .btn-call{display:none}
+  .btn-demo{padding:8px 14px;font-size:13px}
+
+  /* HERO PRICING BANNER */
+  .hero-pricing{padding:36px 16px 40px}
+  .hp-inner{flex-direction:column;gap:28px}
+  .hp-title{font-size:28px;letter-spacing:-1px}
+  .hp-sub{font-size:15px}
+  .hp-proof li{font-size:14px}
+  .hp-cta{flex-direction:column;gap:10px}
+  .hp-btn,.hp-ghost{width:100%;text-align:center;padding:13px 20px}
+  .hp-card{padding:28px 24px;width:100%}
+  .hp-amt{font-size:60px}
+  .hp-meta-img{max-width:180px}
+
+  /* HERO */
+  .hero{padding:40px 16px 32px}
+  .hero h1{font-size:32px;letter-spacing:-1.5px}
+  .hero p{font-size:15px}
+  .hero-btns{flex-direction:column;align-items:center;gap:10px}
+  .hbp,.hbs{width:100%;justify-content:center;padding:13px 20px}
+
+  /* LOGO CLOUD */
+  .logo-cloud{padding:20px 16px}
+  .logo-row{gap:16px}
+  .logo-item{font-size:12px}
+
+  /* PRICING HIGHLIGHT */
+  .ph-wrap{margin:0 12px 36px}
+  .ph-inner{flex-direction:column;padding:28px 20px;gap:24px}
+  .ph-title{font-size:24px;letter-spacing:-1px}
+  .ph-sub{font-size:15px}
+  .ph-cta{flex-direction:column;gap:10px}
+  .ph-btn,.ph-ghost{width:100%;text-align:center}
+  .ph-card{padding:28px 20px;min-width:unset;width:100%}
+  .ph-amt{font-size:60px}
+
+  /* TRUST */
+  .trust-section{padding:28px 16px}
+  .trust-grid{grid-template-columns:repeat(3,1fr);gap:16px}
+  .trust-num{font-size:26px}
+  .trust-lbl{font-size:12px}
+
+  /* SECTIONS */
+  .section{padding:44px 16px}
+  .sec-title{font-size:26px;letter-spacing:-1px}
+  .sec-sub{font-size:15px;margin-bottom:28px}
+  .channel-grid{gap:8px}
+  .ch-pill{padding:9px 14px;font-size:14px}
+
+  /* AI */
+  .ai-sec{padding:44px 16px}
+  .ai-grid{grid-template-columns:1fr;gap:14px}
+
+  /* PILLARS */
+  .pillars{padding:44px 16px}
+  .ptabs{max-width:100%}
+  .ptab{font-size:13px;padding:9px 8px}
+  .pcontent.active{grid-template-columns:1fr;gap:28px}
+  .pt-stats{gap:14px}
+  .pstat-n{font-size:22px}
+
+  /* INTEGRATIONS */
+  .int-sec{padding:44px 16px}
+  .int-grid{grid-template-columns:repeat(3,1fr);gap:10px}
+  .int-card{padding:14px 8px;font-size:12px}
+  .int-icon{font-size:22px}
+
+  /* PRICING */
+  .pricing-sec{padding:44px 16px}
+  .price-grid{grid-template-columns:1fr;gap:16px;max-width:420px}
+
+  /* CONTACT */
+  .contact-sec{padding:44px 16px}
+  .contact-inner{grid-template-columns:1fr;gap:32px}
+  .cf-r{grid-template-columns:1fr}
+
+  /* REVIEWS */
+  .reviews{padding:44px 16px}
+  .rev-grid{grid-template-columns:1fr;gap:14px}
+
+  /* CTA */
+  .cta-sec{padding:44px 16px}
+  .cta-sec h2{font-size:28px;letter-spacing:-1px}
+  .cta-btns{flex-direction:column;align-items:center;gap:10px}
+  .cta-g,.cta-o{width:100%;justify-content:center;padding:13px 20px}
+
+  /* FOOTER */
+  footer{padding:36px 16px 0}
+  .ft{grid-template-columns:1fr 1fr;gap:20px}
+  .fd{max-width:100%}
+  .fb{flex-direction:column;align-items:flex-start;gap:8px}
+  .footer-trust{margin:0 -16px;padding:18px 16px;gap:8px}
+  .ft-pill{padding:8px 14px;gap:8px}
+  .ft-pill-label{font-size:10px}
+  .ft-pill-sub{font-size:9px}
+  .ft-sep{display:none}
+  .f-row{grid-template-columns:1fr}
+
+  /* MODAL */
+  .modal-box{border-radius:16px}
+  .modal-head{padding:22px 20px 18px}
+  .modal-body{padding:20px 20px 24px}
+  .f-row{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -434,6 +530,9 @@ footer{background:#fff;border-top:1px solid var(--border);padding:52px 40px 26px
           <span class="hp-type">Auth</span>
           <span class="hp-type">Service</span>
         </div>
+      </div>
+      <div class="hp-meta-wrap">
+        <img src="images/meta.png" alt="Meta Tech Partner" class="hp-meta-img"/>
       </div>
     </div>
   </div>
